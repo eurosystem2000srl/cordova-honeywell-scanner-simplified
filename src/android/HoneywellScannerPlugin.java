@@ -20,6 +20,9 @@ import com.honeywell.aidc.BarcodeReader;
 import com.honeywell.aidc.ScannerUnavailableException;
 import com.honeywell.aidc.ScannerNotClaimedException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HoneywellScannerPlugin extends CordovaPlugin implements BarcodeReader.BarcodeListener {
     private static final String TAG = "HoneywellScanner";
     private static BarcodeReader barcodeReader;
@@ -39,6 +42,32 @@ public class HoneywellScannerPlugin extends CordovaPlugin implements BarcodeRead
                 barcodeReader = manager.createBarcodeReader();
                 if (barcodeReader != null) {
                     barcodeReader.addBarcodeListener(HoneywellScannerPlugin.this);
+                    Map<String, Object> properties = new HashMap<String, Object>();
+                    // Set Symbologies On/Off
+                    properties.put(BarcodeReader.PROPERTY_CODE_128_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_GS1_128_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_QR_CODE_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_CODE_39_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_DATAMATRIX_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_UPC_A_ENABLE, true);
+                    properties.put(BarcodeReader.PROPERTY_EAN_13_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_AZTEC_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_CODABAR_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_INTERLEAVED_25_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_PDF_417_ENABLED, true);
+                    // Set Max Code 39 barcode length
+                    properties.put(BarcodeReader.PROPERTY_CODE_39_MAXIMUM_LENGTH, 10);
+                    // Turn on center decoding
+                    properties.put(BarcodeReader.PROPERTY_CENTER_DECODE, true);
+                    // Enable bad read response
+                    properties.put(BarcodeReader.PROPERTY_NOTIFICATION_BAD_READ_ENABLED, true);
+
+                    // Enable Check digits for UPCA and EAN13
+                    properties.put(BarcodeReader.PROPERTY_UPC_A_CHECK_DIGIT_TRANSMIT_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_EAN_13_CHECK_DIGIT_TRANSMIT_ENABLED, true);
+
+                    // Apply the settings
+                    barcodeReader.setProperties(properties);
                     try {
                         barcodeReader.claim();
                     } catch (ScannerUnavailableException e) {
