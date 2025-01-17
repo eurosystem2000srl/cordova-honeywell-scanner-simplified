@@ -51,6 +51,7 @@ public class HoneywellScannerPlugin extends CordovaPlugin implements BarcodeRead
                     properties.put(BarcodeReader.PROPERTY_DATAMATRIX_ENABLED, true);
                     properties.put(BarcodeReader.PROPERTY_UPC_A_ENABLE, true);
                     properties.put(BarcodeReader.PROPERTY_EAN_13_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_EAN_8_ENABLED, true);
                     properties.put(BarcodeReader.PROPERTY_AZTEC_ENABLED, true);
                     properties.put(BarcodeReader.PROPERTY_CODABAR_ENABLED, true);
                     properties.put(BarcodeReader.PROPERTY_INTERLEAVED_25_ENABLED, true);
